@@ -12,8 +12,8 @@ fun main() {
         return parseInput(input)
             .sumOf {
                 val shapeScore = it.second.points
-                val outcomeScore = calcOutcome(it.second, it.first)
-                shapeScore + outcomeScore
+                val outcome = calcOutcome(it.second, it.first)
+                shapeScore + outcome.points
             }
     }
 
@@ -45,17 +45,17 @@ fun main() {
     println(part2(input))
 }
 
-fun calcOutcome(player: Symbol, opponent: Symbol): Int {
+fun calcOutcome(player: Symbol, opponent: Symbol): Result {
     if (player == opponent) {
-        return 3
+        return Result.DRAW
     }
     if (player == Symbol.ROCK && opponent == Symbol.SCISSORS
         || player == Symbol.SCISSORS && opponent == Symbol.PAPER
         || player == Symbol.PAPER && opponent == Symbol.ROCK
     ) {
-        return 6
+        return Result.WIN
     }
-    return 0
+    return Result.LOSE
 }
 
 fun toSymbol(input: String) = when (input) {
