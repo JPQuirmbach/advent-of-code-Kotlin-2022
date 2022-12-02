@@ -3,13 +3,12 @@ fun main() {
     fun parseInput(input: String) = input.split("\n")
         .flatMap { line ->
             line.split(" ")
-                .map { toSymbol(it) }
                 .zipWithNext()
         }
 
-
     fun part1(input: String): Int {
         return parseInput(input)
+            .map { Pair(toSymbol(it.first), toSymbol(it.second)) }
             .sumOf {
                 val shapeScore = it.second.points
                 val outcome = calcOutcome(it.second, it.first)
@@ -18,12 +17,8 @@ fun main() {
     }
 
     fun part2(input: String): Int {
-        return input.split("\n")
-            .flatMap { line ->
-                line.split(" ")
-                    .zipWithNext()
-                    .map { Pair(toSymbol(it.first), it.second) }
-            }
+        return parseInput(input)
+            .map { Pair(toSymbol(it.first), it.second) }
             .sumOf {
                 val move = determineMove(it.second)
                 val shapeScore = when (move) {
