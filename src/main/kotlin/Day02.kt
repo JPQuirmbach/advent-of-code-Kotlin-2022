@@ -66,11 +66,7 @@ fun winMove(opponent: Symbol) = when (opponent) {
     Symbol.SCISSORS -> Symbol.ROCK
 }
 
-fun drawMove(opponent: Symbol) = when (opponent) {
-    Symbol.ROCK -> Symbol.ROCK
-    Symbol.PAPER -> Symbol.PAPER
-    Symbol.SCISSORS -> Symbol.SCISSORS
-}
+fun drawMove(opponent: Symbol) = opponent
 
 fun loseMove(opponent: Symbol) = when (opponent) {
     Symbol.ROCK -> Symbol.SCISSORS
