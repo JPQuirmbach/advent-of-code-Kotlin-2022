@@ -1,46 +1,26 @@
 fun main() {
 
-    fun findCommonLetter(s1: String, s2: String): Char {
-        s1.forEach {
-            if (s2.contains(it)) {
-                return it
-            }
-        }
-        error("Couldn't find common letter")
-    }
-
-    fun findCommonLetter2(s: List<String>): Char {
-        s.component1()
-            .forEach {
-                if (s.component2().contains(it) && s.component3().contains(it)) {
-                    return it
-                }
-            }
-        error("Couldn't find common letter")
-    }
-
-    fun countPriority(c: Char): Int {
-        if (c.isLowerCase()) {
-            return c - 'a' + 1
-        }
-        return c - 'A' + 27
+    fun priority(group: List<String>): Int {
+        val chars = group.flatMap { it.toSet() }
+        val sharedItem = chars.groupingBy { it }
+            .eachCount()
+            .maxBy { it.value }.key
+        return if (sharedItem.isLowerCase())
+            sharedItem - 'a' + 1
+        else
+            sharedItem - 'A' + 27
     }
 
     fun part1(input: String): Int {
         return input.lines()
-            .map {
-                val chunked = it.chunked(it.length / 2)
-                chunked.first() to chunked.last()
-            }
-            .map { findCommonLetter(it.first, it.second) }
-            .sumOf { countPriority(it) }
+            .map { it.chunked(it.length / 2) }
+            .sumOf { priority(it) }
     }
 
     fun part2(input: String): Int {
         return input.lines()
             .chunked(3)
-            .map { findCommonLetter2(it) }
-            .sumOf { countPriority(it) }
+            .sumOf { priority(it) }
     }
 
     // test if implementation meets criteria from the description, like:
