@@ -1,14 +1,13 @@
 fun main() {
 
     fun parseInput(input: String, markerSize: Int): Int {
-        val filter = input.windowed(markerSize)
-            .first { it ->
+        return input.windowed(markerSize)
+            .indexOfFirst { it ->
                 it.groupingBy { it }
                     .eachCount()
                     .values
                     .max() == 1
-            }
-        return input.indexOf(filter) + markerSize
+            } + markerSize
     }
 
 
